@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Inventory · GrocerEase{% endblock %}
+{% block content %}
+<section class="page-title"><div><p class="eyebrow">CATALOG</p><h1>Inventory</h1><p>Manage product details, stock levels, and prices.</p></div></section>
+<form class="search" method="get"><input name="q" value="{{ query }}" placeholder="Search by name, SKU, or category" aria-label="Search inventory"><button>Search</button>{% if query %}<a href="{{ url_for('main.inventory') }}">Clear</a>{% endif %}</form>
+<div class="table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Value</th><th>Actions</th></tr></thead><tbody>
+{% for product in products %}<tr><td><strong>{{ product.name }}</strong><small>{{ product.sku }}</small></td><td>{{ product.category }}</td><td>${{ '%.2f'|format(product.unit_price) }}</td><td><span class="badge {% if product.quantity <= product.low_stock_threshold %}warning{% endif %}">{{ product.quantity }}</span></td><td>${{ '%.2f'|format(product.unit_price * product.quantity) }}</td><td class="actions"><a href="{{ url_for('main.edit_product', product_id=product.id) }}">Edit</a><form method="post" action="{{ url_for('main.delete_product', product_id=product.id) }}" onsubmit="return confirm('Delete this product?')"><button class="link danger">Delete</button></form></td></tr>
+{% else %}<tr><td colspan="6" class="empty">No products found. Add your first product to begin.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}
+

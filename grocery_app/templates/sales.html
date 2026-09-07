@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Sales · GrocerEase{% endblock %}
+{% block content %}
+<section class="page-title"><div><p class="eyebrow">TRANSACTIONS</p><h1>Sales</h1><p>Record purchases and automatically update inventory.</p></div></section>
+<form class="sale-form" method="post"><label>Product<select required name="product_id"><option value="">Select a product</option>{% for product in products %}<option value="{{ product.id }}">{{ product.name }} · {{ product.quantity }} available</option>{% endfor %}</select></label><label>Quantity<input required type="number" name="quantity" min="1" step="1" value="1"></label><button class="button">Record sale</button></form>
+<article class="panel"><div class="panel-title"><div><p class="eyebrow">HISTORY</p><h2>Sales activity</h2></div></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Product</th><th>Quantity</th><th>Unit price</th><th>Total</th></tr></thead><tbody>{% for sale in history %}<tr><td>{{ sale.sold_at }}</td><td><strong>{{ sale.name }}</strong><small>{{ sale.sku }}</small></td><td>{{ sale.quantity }}</td><td>${{ '%.2f'|format(sale.unit_price) }}</td><td>${{ '%.2f'|format(sale.quantity * sale.unit_price) }}</td></tr>{% else %}<tr><td colspan="5" class="empty">No sales recorded yet.</td></tr>{% endfor %}</tbody></table></div></article>
+{% endblock %}
+

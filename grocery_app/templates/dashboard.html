@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · GrocerEase{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow">STORE OVERVIEW</p><h1>Inventory at a glance</h1><p>Track stock, inventory value, and sales from one simple dashboard.</p></div>
+  <a class="button" href="{{ url_for('main.add_product') }}">Add new product</a>
+</section>
+<section class="stats">
+  <article><span>Products</span><strong>{{ stats.products }}</strong><small>unique items</small></article>
+  <article><span>Units in stock</span><strong>{{ stats.units }}</strong><small>across inventory</small></article>
+  <article><span>Inventory value</span><strong>${{ '%.2f'|format(stats.value) }}</strong><small>current retail value</small></article>
+  <article><span>Sales recorded</span><strong>${{ '%.2f'|format(sales_total) }}</strong><small>all-time revenue</small></article>
+</section>
+<section class="two-column">
+  <article class="panel">
+    <div class="panel-title"><div><p class="eyebrow">NEEDS ATTENTION</p><h2>Low stock</h2></div><span class="count">{{ stats.low_stock }}</span></div>
+    {% if low_stock %}
+      <div class="item-list">{% for product in low_stock %}<div><span><strong>{{ product.name }}</strong><small>{{ product.sku }} · threshold {{ product.low_stock_threshold }}</small></span><b class="low">{{ product.quantity }} left</b></div>{% endfor %}</div>
+    {% else %}<p class="empty">All products are above their low-stock thresholds.</p>{% endif %}
+  </article>
+  <article class="panel">
+    <div class="panel-title"><div><p class="eyebrow">LATEST ACTIVITY</p><h2>Recent sales</h2></div><a href="{{ url_for('main.sales') }}">View all</a></div>
+    {% if recent_sales %}
+      <div class="item-list">{% for sale in recent_sales %}<div><span><strong>{{ sale.name }}</strong><small>{{ sale.sold_at }}</small></span><b>${{ '%.2f'|format(sale.quantity * sale.unit_price) }}</b></div>{% endfor %}</div>
+    {% else %}<p class="empty">No sales recorded yet.</p>{% endif %}
+  </article>
+</section>
+{% endblock %}
+

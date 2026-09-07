@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · GrocerEase{% endblock %}
+{% block content %}
+<section class="page-title"><div><p class="eyebrow">INVENTORY</p><h1>{{ title }}</h1><p>Enter accurate information so totals and stock alerts stay useful.</p></div></section>
+<form class="form-card" method="post">
+  <div class="form-grid">
+    <label>SKU<input required name="sku" maxlength="30" value="{{ request.form.get('sku', product.sku if product else '') }}" placeholder="e.g. APL-001"></label>
+    <label>Product name<input required name="name" maxlength="120" value="{{ request.form.get('name', product.name if product else '') }}" placeholder="e.g. Honeycrisp Apples"></label>
+    <label>Category<input required name="category" maxlength="80" value="{{ request.form.get('category', product.category if product else '') }}" placeholder="e.g. Produce"></label>
+    <label>Unit price ($)<input required type="number" name="unit_price" min="0" step="0.01" value="{{ request.form.get('unit_price', product.unit_price if product else '') }}"></label>
+    <label>Quantity<input required type="number" name="quantity" min="0" step="1" value="{{ request.form.get('quantity', product.quantity if product else '0') }}"></label>
+    <label>Low-stock threshold<input required type="number" name="low_stock_threshold" min="0" step="1" value="{{ request.form.get('low_stock_threshold', product.low_stock_threshold if product else '5') }}"></label>
+  </div>
+  <div class="form-actions"><a href="{{ url_for('main.inventory') }}">Cancel</a><button class="button">Save product</button></div>
+</form>
+{% endblock %}
+

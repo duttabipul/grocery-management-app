@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Grocery inventory and sales management application">
+  <title>{% block title %}GrocerEase{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('main.dashboard') }}"><span>G</span> GrocerEase</a>
+    <nav aria-label="Main navigation">
+      <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('main.inventory') }}">Inventory</a>
+      <a href="{{ url_for('main.sales') }}">Sales</a>
+      <a class="button small" href="{{ url_for('main.add_product') }}">+ Add product</a>
+    </nav>
+  </header>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>Built with Python, Flask, and SQLite · Bipul Dutta</footer>
+</body>
+</html>
+
