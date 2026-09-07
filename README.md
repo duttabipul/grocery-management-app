@@ -2,6 +2,19 @@
 
 A responsive inventory and sales management application built with Python, Flask, and SQLite. This project modernizes an earlier grocery CRUD prototype into a practical portfolio application.
 
+## Application preview
+
+### Dashboard
+
+![GrocerEase dashboard](docs/screenshots/dashboard.png)
+
+### Inventory management
+
+![GrocerEase inventory](docs/screenshots/inventory.png)
+
+### Sales tracking
+
+![GrocerEase sales](docs/screenshots/sales.png)
 ## Features
 
 - Dashboard with product count, stock totals, inventory value, and recorded revenue
